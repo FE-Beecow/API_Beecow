@@ -13,18 +13,17 @@ namespace Beecow.Controllers
     //[AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class OrdersController : ControllerBase
     {
-        private readonly IProductService productService;
+        private readonly IOrderService orderService;
 
-        public ProductsController(IProductService productService)
+        public OrdersController(IOrderService orderService)
         {
-            this.productService = productService;
+            this.orderService = orderService;
         }
 
         [HttpGet()]
-        //[Authorize(Policy = "OnlyNonBlockedCustomer")]
-        [Authorize]
+        [Authorize(Policy = "OnlyNonBlockedCustomer")]
         public async Task<IActionResult> Get()
         {
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
@@ -36,14 +35,14 @@ namespace Beecow.Controllers
                 return Unauthorized("Invalid customer");
             }
 
-            var products = await productService.GetProductByCustomerId(int.Parse(claim.Value));
+            var orders = await orderService.GetOrdersByCustomerId(int.Parse(claim.Value));
 
-            if (products == null || !products.Any())
+            if (orders == null || !orders.Any())
             {
-                return BadRequest($"No product was found");
+                return BadRequest($"No order was found");
             }
 
-            return Ok(products);
+            return Ok(orders);
         }
     }
 }

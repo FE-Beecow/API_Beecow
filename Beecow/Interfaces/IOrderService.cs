@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace Beecow.Interfaces
 {
-    public interface IProductService
+    public interface IOrderService
     {
-        Task<List<Product>> GetProductByCustomerId(int id);
+        Task<List<Order>> GetOrdersByCustomerId(int id);
     }
 }

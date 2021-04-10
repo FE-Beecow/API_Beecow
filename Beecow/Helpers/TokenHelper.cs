@@ -32,8 +32,8 @@ namespace Beecow.Helpers
             var key = Convert.FromBase64String(Secret);
 
             var claimsIdentity = new ClaimsIdentity(new[] {
-                new Claim(ClaimTypes.NameIdentifier, customer.User_Id.ToString()),
-                new Claim("IsBlocked", customer.Blocked.ToString())
+                new Claim(ClaimTypes.NameIdentifier, customer.Id.ToString()),
+                new Claim("IsBlocked", (!customer.IsActive).ToString())
             });
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
 

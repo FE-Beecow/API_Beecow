@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Beecow.DTOs.Account
+namespace Beecow.DTOs.User
 {
     public class UserViewModel
     {
@@ -11,5 +11,7 @@ namespace Beecow.DTOs.Account
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Token { get; set; }
+        public Guid BusinessId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

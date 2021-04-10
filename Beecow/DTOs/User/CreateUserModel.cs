@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Beecow.DTOs.Account
+namespace Beecow.DTOs.User
 {
     public class CreateUserModel
     {
@@ -17,6 +17,5 @@ namespace Beecow.DTOs.Account
         public bool Blocked { get; set; }
         public string Update_Date { get; set; }
         public string Create_Date { get; set; }
-
     }
 }

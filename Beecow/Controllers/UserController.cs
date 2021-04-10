@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Beecow.Interfaces;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Beecow.Entities;
-using Microsoft.Extensions.Configuration;
-using Beecow.DTOs.Account;
+using Beecow.DTOs.User;
 
 namespace Beecow.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IAccountService _accountService;
+        private readonly IUserService _userService;
+        private readonly IBusinessService _businessService;
 
-        public AccountController(IAccountService loginService)
+        public UserController(IUserService userService,
+            IBusinessService businessService)
         {
-            this._accountService = loginService;
+            _userService = userService;
+            _businessService = businessService;
         }
 
         [HttpPost]
@@ -28,7 +28,7 @@ namespace Beecow.Controllers
                 return BadRequest("Missing login details");
             }
 
-            var loginResponse = await _accountService.Login(loginRequest);
+            var loginResponse = await _userService.Login(loginRequest);
 
             if (loginResponse == null)
             {
@@ -47,7 +47,7 @@ namespace Beecow.Controllers
                 return BadRequest($"User exists");
             }
 
-            var registerResponse = await _accountService.Register(registerRequest);
+            var registerResponse = await _userService.Register(registerRequest);
 
             if (registerResponse == null)
             {
@@ -55,6 +55,15 @@ namespace Beecow.Controllers
             }
 
             return Ok(registerResponse);
+        }
+
+        [HttpGet]
+        [Route("get-all-businesses")]
+        public async Task<IActionResult> GetAllBusinesses()
+        {
+            var result = await _businessService.GetAllBusinesses();
+
+            return Ok(result);
         }
     }
 }
