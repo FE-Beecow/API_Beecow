@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Beecow.DTOs.User
 {
-    public class UserViewModel
+    public class UserResponse
     {
         public string Username { get; set; }
         public string Email { get; set; }

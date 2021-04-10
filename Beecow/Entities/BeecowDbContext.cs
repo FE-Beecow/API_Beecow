@@ -6,6 +6,7 @@ namespace Beecow.Entities
     {
         public BeecowDbContext(DbContextOptions<BeecowDbContext> options) : base(options)
         {
+            this.Database.Migrate();
         }
 
         public DbSet<User> User { get; set; }
@@ -14,10 +15,11 @@ namespace Beecow.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Business>().HasOne(a => a.User)
-                                       .WithOne(b => b.Business)
-                                       .HasForeignKey<User>(b => b.BusinessId);
-            modelBuilder.Entity<Order>().ToTable("Order");
+            modelBuilder.Entity<Business>().HasMany(a => a.Users)
+                                       .WithOne(b => b.Business);
+            modelBuilder.Entity<Order>().ToTable("Order")
+                                        .Property(p => p.Total)
+                                        .HasColumnType("decimal(18,2)");
         }
     }
 }

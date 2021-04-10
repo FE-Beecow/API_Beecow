@@ -5,7 +5,7 @@ namespace Beecow.Interfaces
 {
     public interface IUserService
     {
-        Task<UserViewModel> Login(LoginUserModel loginRequest);
-        Task<RegisterViewModel> Register(CreateUserModel registerRequest);
+        Task<UserResponse> Login(LoginUserModel loginRequest);
+        Task<RegisterResponse> Register(CreateUserModel registerRequest);
     }
 }

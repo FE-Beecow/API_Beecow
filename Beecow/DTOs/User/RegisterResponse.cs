@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Beecow.DTOs.User
 {
-    public class RegisterViewModel
+    public class RegisterResponse
     {
         public string Fullname { get; set; }
         public string Status { get; set; }

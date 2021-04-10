@@ -15,7 +15,6 @@ namespace Beecow.DTOs.User
         public string Gender { get; set; }
         public string Dob { get; set; }
         public bool Blocked { get; set; }
-        public string Update_Date { get; set; }
-        public string Create_Date { get; set; }
+        public Guid BusinessId { get; set; }
     }
 }

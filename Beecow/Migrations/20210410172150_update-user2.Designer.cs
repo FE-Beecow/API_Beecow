@@ -4,14 +4,16 @@ using Beecow.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Beecow.Migrations
 {
     [DbContext(typeof(BeecowDbContext))]
-    partial class BeecowDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210410172150_update-user2")]
+    partial class updateuser2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,11 +60,11 @@ namespace Beecow.Migrations
                     b.Property<string>("Currency")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CustomerFullname")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
-
-                    b.Property<Guid?>("CustomerId1")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -78,16 +80,15 @@ namespace Beecow.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerFullname");
 
                     b.ToTable("Order");
                 });
 
             modelBuilder.Entity("Beecow.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Fullname")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -107,11 +108,11 @@ namespace Beecow.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Fullname")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -128,7 +129,7 @@ namespace Beecow.Migrations
                     b.Property<string>("UpdatedUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Fullname");
 
                     b.HasIndex("BusinessId");
 
@@ -139,7 +140,7 @@ namespace Beecow.Migrations
                 {
                     b.HasOne("Beecow.Entities.User", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerFullname");
                 });
 
             modelBuilder.Entity("Beecow.Entities.User", b =>

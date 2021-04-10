@@ -2,6 +2,7 @@
 using Beecow.Interfaces;
 using System.Threading.Tasks;
 using Beecow.DTOs.User;
+using System;
 
 namespace Beecow.Controllers
 {
@@ -42,19 +43,27 @@ namespace Beecow.Controllers
         [Route("register")]
         public async Task<IActionResult> Register(CreateUserModel registerRequest)
         {
-            if (registerRequest == null || string.IsNullOrEmpty(registerRequest.Fullname) || string.IsNullOrEmpty(registerRequest.Password))
+            try
             {
-                return BadRequest($"User exists");
+                if (registerRequest == null || string.IsNullOrEmpty(registerRequest.Fullname) || string.IsNullOrEmpty(registerRequest.Password))
+                {
+                    return BadRequest($"User exists");
+                }
+
+                var registerResponse = await _userService.Register(registerRequest);
+
+                if (registerResponse == null)
+                {
+                    return BadRequest($"Invalid credentials");
+                }
+
+                return Ok(registerResponse);
             }
-
-            var registerResponse = await _userService.Register(registerRequest);
-
-            if (registerResponse == null)
+            catch (Exception ex)
             {
-                return BadRequest($"Invalid credentials");
+                throw ex;
             }
-
-            return Ok(registerResponse);
+            
         }
 
         [HttpGet]

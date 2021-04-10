@@ -10,17 +10,17 @@ namespace Beecow.Services
 {
     public class UserService : IUserService
     {
-        private readonly BeecowDbContext customersDbContext;
+        private readonly BeecowDbContext _dbContext;
         private readonly IMapper _mapper;
-        public UserService(BeecowDbContext customersDbContext, IMapper mapper)
+        public UserService(BeecowDbContext dbContext, IMapper mapper)
         {
-            this.customersDbContext = customersDbContext;
+            _dbContext = dbContext;
             _mapper = mapper;
         }
 
-        public async Task<UserViewModel> Login(LoginUserModel loginRequest)
+        public async Task<UserResponse> Login(LoginUserModel loginRequest)
         {
-            var user = customersDbContext.User.FirstOrDefault(x => x.Email == loginRequest.Username
+            var user = _dbContext.User.FirstOrDefault(x => x.Email == loginRequest.Username
                                 || x.Phone == loginRequest.Username && x.Password == loginRequest.Password);
 
             if (user == null)
@@ -31,7 +31,7 @@ namespace Beecow.Services
 
             var token = await Task.Run(() => TokenHelper.GenerateToken(user));
 
-            return new UserViewModel
+            return new UserResponse
             {
                 UserId = user.Id,
                 Username = user.Fullname,
@@ -42,20 +42,32 @@ namespace Beecow.Services
             };
         }
 
-        public async Task<RegisterViewModel> Register(CreateUserModel registerRequest)
+        public async Task<RegisterResponse> Register(CreateUserModel model)
         {
-            var register = customersDbContext.User.SingleOrDefault(customer => (customer.Email == registerRequest.Email || customer.Phone == registerRequest.Phone));
+            var register = _dbContext.User.FirstOrDefault(customer => (customer.Email == model.Email || customer.Phone == model.Phone));
             if (register != null)
             {
                 return null;
             }
 
-            var customer = _mapper.Map<User>(registerRequest);
+            // TODO: add config mapper
+            //var user = _mapper.Map<User>(registerRequest);
 
-            await customersDbContext.User.AddAsync(customer);
-            await customersDbContext.SaveChangesAsync();
+            var user = new User()
+            {
+                Email = model.Email,
+                Phone = model.Phone,
+                Password = model.Password,
+                Address = model.Address,
+                Fullname = model.Fullname,
+                Gender = true,
+                BusinessId = model.BusinessId
+            };
 
-            return new RegisterViewModel { Fullname = customer.Fullname, Status = "200", Message = "Success" };
+            await _dbContext.User.AddAsync(user);
+            await _dbContext.SaveChangesAsync();
+
+            return new RegisterResponse { Fullname = user.Fullname, Status = "200", Message = "Success" };
 
         }
 

@@ -9,6 +9,6 @@ namespace Beecow.Entities
     {
         public string Name { get; set; }
 
-        public User User { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

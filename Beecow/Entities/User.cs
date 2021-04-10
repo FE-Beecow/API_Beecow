@@ -6,7 +6,6 @@ namespace Beecow.Entities
 {
     public class User: BaseEntity
     {
-        [Key]
         public string Fullname { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
@@ -14,6 +13,7 @@ namespace Beecow.Entities
         public string Address { get; set; }
         public bool Gender { get; set; }
         public Guid BusinessId { get; set; }
-        public virtual Business Business { get; set; }
+        public Business Business { get; set; }
+        public DateTime? DOB { get; set; }
     }
 }
