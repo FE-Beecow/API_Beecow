@@ -54,7 +54,7 @@ namespace Beecow.Controllers
 
                 if (registerResponse == null)
                 {
-                    return BadRequest(new { message = $"Invalid credentials" });
+                    return Ok(new { status = 999, message = $"User exists" });
                 }
 
                 return Ok(registerResponse);

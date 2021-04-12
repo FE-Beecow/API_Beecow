@@ -44,10 +44,16 @@ namespace Beecow.Services
 
         public async Task<RegisterResponse> Register(CreateUserModel model)
         {
-            var register = _dbContext.User.FirstOrDefault(customer => (customer.Email == model.Email || customer.Phone == model.Phone));
-            if (register != null)
+            var checkEmail = _dbContext.User.FirstOrDefault(customer => (customer.Email == model.Email));
+            if (checkEmail != null)
             {
-                return null;
+                return new RegisterResponse { Status = "999", Message = "Email exists" };
+            }
+
+            var checkPhone = _dbContext.User.FirstOrDefault(customer => (customer.Phone == model.Phone));
+            if (checkPhone != null)
+            {
+                return new RegisterResponse { Status = "998", Message = "Phone exists" };
             }
 
             // TODO: add config mapper
