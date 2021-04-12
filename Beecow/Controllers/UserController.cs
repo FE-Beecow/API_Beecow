@@ -33,7 +33,7 @@ namespace Beecow.Controllers
 
             if (loginResponse == null)
             {
-                return BadRequest($"Invalid credentials");
+                return BadRequest(new { message = $"Invalid credentials" });
             }
 
             return Ok(loginResponse);
@@ -47,14 +47,14 @@ namespace Beecow.Controllers
             {
                 if (registerRequest == null || string.IsNullOrEmpty(registerRequest.Fullname) || string.IsNullOrEmpty(registerRequest.Password))
                 {
-                    return BadRequest($"User exists");
+                    return BadRequest(new { message = $"User exists" });
                 }
 
                 var registerResponse = await _userService.Register(registerRequest);
 
                 if (registerResponse == null)
                 {
-                    return BadRequest($"Invalid credentials");
+                    return BadRequest(new { message = $"Invalid credentials" });
                 }
 
                 return Ok(registerResponse);
@@ -63,7 +63,7 @@ namespace Beecow.Controllers
             {
                 throw ex;
             }
-            
+
         }
 
         [HttpGet]

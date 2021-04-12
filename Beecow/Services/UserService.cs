@@ -20,8 +20,8 @@ namespace Beecow.Services
 
         public async Task<UserResponse> Login(LoginUserModel loginRequest)
         {
-            var user = _dbContext.User.FirstOrDefault(x => x.Email == loginRequest.Username
-                                || x.Phone == loginRequest.Username && x.Password == loginRequest.Password);
+            var user = _dbContext.User.FirstOrDefault(x => (x.Email == loginRequest.Username
+                                || x.Phone == loginRequest.Username) && x.Password == loginRequest.Password);
 
             if (user == null)
             {
