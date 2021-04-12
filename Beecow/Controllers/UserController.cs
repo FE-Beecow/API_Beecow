@@ -33,7 +33,7 @@ namespace Beecow.Controllers
 
             if (loginResponse == null)
             {
-                return BadRequest(new { message = $"Invalid credentials" });
+                return Ok(new { status = 104, message = $"The username or password was not correct" });
             }
 
             return Ok(loginResponse);
