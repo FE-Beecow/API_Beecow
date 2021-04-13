@@ -4,14 +4,16 @@ using Beecow.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Beecow.Migrations
 {
     [DbContext(typeof(BeecowDbContext))]
-    partial class BeecowDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210413105039_Add_Product")]
+    partial class Add_Product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +50,6 @@ namespace Beecow.Migrations
                     b.ToTable("Business");
                 });
 
-
             modelBuilder.Entity("Beecow.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -82,78 +83,6 @@ namespace Beecow.Migrations
                     b.HasIndex("CustomerId1");
 
                     b.ToTable("Order");
-                });
-
-            modelBuilder.Entity("Beecow.Entities.Product", b =>
-                {
-                    b.Property<Guid>("Product_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("User_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Product_title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Product_short_description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Product_full_description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Product_price")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Product_price_currency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Product_price_discount_value")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("Product_price_discount_percentage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Product_unit")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Product_category")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Product_size")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Product_weight")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Product_weight_unit")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Product_inventory_amount")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("Product_inventory_adjustment")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Product_status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Product_status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastSavedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastSavedUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Product_id");
-
-                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Beecow.Entities.User", b =>
@@ -208,33 +137,6 @@ namespace Beecow.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Beecow.Entities.ImagesProduct", b =>
-            {
-                b.Property<string>("Images_id")
-                    .HasColumnType("uniqueidentifier");
-
-                b.Property<byte[]>("Product_images")
-                    .HasColumnType("varbinary(max)");
-
-                b.Property<Guid?>("Product_id")
-                    .HasColumnType("uniqueidentifier");
-
-                b.Property<DateTime>("LastSavedTime")
-                        .HasColumnType("datetime2");
-
-                b.Property<string>("CreatedUser")
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("LastSavedUser")
-                    .HasColumnType("nvarchar(max)");
-
-                b.HasKey("Images_id");
-
-                b.HasIndex("Product_id");
-
-                b.ToTable("ImagesProduct");
-            });
-
             modelBuilder.Entity("Beecow.Entities.Order", b =>
                 {
                     b.HasOne("Beecow.Entities.User", "Customer")
@@ -250,15 +152,6 @@ namespace Beecow.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
-
-            modelBuilder.Entity("Beecow.Entities.ImagesProduct", b =>
-            {
-                b.HasOne("Beecow.Entities.Product", "Product")
-                    .WithMany("ImagesProduct")
-                    .HasForeignKey("Product_id")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-            });
 #pragma warning restore 612, 618
         }
     }
