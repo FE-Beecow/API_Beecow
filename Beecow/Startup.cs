@@ -67,6 +67,7 @@ namespace Beecow
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IBusinessService, BusinessService>();
+            services.AddScoped<IProductService, ProductsService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddCors();
             services.AddControllers();

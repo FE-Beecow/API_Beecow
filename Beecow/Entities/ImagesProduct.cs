@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace Beecow.Entities
 {
-    public class ImagesProduct
+    public class ImagesProduct:  BaseEntity
     {
-        
-        public Guid Product_id { get; set; }
-        public byte[] Product_images { get; set; }
+        public Product Product { get; set; }
+        public byte[] ProductImages { get; set; }
     }
 }
